@@ -1,0 +1,6 @@
+# .gitignore
+
+package.json
+babel.config.js
+.eslintrc.js
+/node_modules
