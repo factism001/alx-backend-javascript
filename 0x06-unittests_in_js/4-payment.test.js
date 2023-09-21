@@ -1,19 +1,21 @@
-const { expect } = require('chai');
-const { it, describe } = require('mocha');
 const sinon = require('sinon');
+var { expect } = require('chai');
 
-const Utils = require('./utils.js');
-const sendPaymentRequestToApi = require('./4-payment.js');
+const sendPaymentRequestToApi = require('./3-payment');
+const Utils = require('./utils');
 
-describe('', () => {
-  const checkSoy = sinon.spy(console, 'log');
-  it('checking if numbers round with spies and stubs', () => {
+describe('Stubs.', function () {
+  it('Ensures math is the same.', () => {
+    const stubUtils = sinon.stub(Utils, 'calculateNumber');
+    stubUtils.returns(10);
+    const spyConsole = sinon.spy(console, 'log');
+
     sendPaymentRequestToApi(100, 20);
-    const stubBoy = sinon.stub(Utils, 'calculateNumber');
-    stubBoy.withArgs('SUM', 100, 20).returns(120);
-    expect(checkSoy.calledOnce).to.be.true;
-    expect(console.log('The total is: 120')).to.be.all;
-    checkSoy.restore();
-    stubBoy.restore();
+
+    expect(stubUtils.calledOnceWithExactly('SUM', 100, 20)).to.be.true;
+    expect(spyConsole.calledOnceWithExactly('The total is: 10')).to.be.true;
+
+    stubUtils.restore();
+    spyConsole.restore();
   });
 });
